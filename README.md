@@ -1,69 +1,56 @@
-# React + TypeScript + Vite
+NO_OF_WHEELS (ENUM)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+'2'
+'4'
 
-Currently, two official plugins are available:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+VEHICLE_AVAILABILITY_STATUS (ENUM)
 
-## Expanding the ESLint configuration
+'available'
+'booked'
+'in-maintenance'
+'decommissioned'
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+vehicle_model_type (TABLE)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+model_type_id UUID (PK)
+model_type_name VARCHAR(255) NOT NULL
+no_of_wheels NO_OF_WHEELS NOT NULL
+created_on DATE NOT NULL
+last_modified_at DATE NOT NULL
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+vehicles (TABLE)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+vehicel_id UUID (PK)
+model_type_id UUID (FK)
+model_name VARCHAR(255)
+availablity_status VEHICLE_AVAILABILITY_STATUS,
+license_plate VARCHAR(255)
+vehicle_color VARCHAR(255)
+create_on DATE
+last_modified_at DATE
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+customer (TABLE)
+
+customer_id UUID (PK)
+first_name VARCHAR(255)
+last_name VARCHAR(255)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+bookings (TABLE)
+
+booking_id UUID (PK)
+customer_id UUID (FK)
+vehicle_id UUID (FK)
+start_date DATE
+end_date DATE
